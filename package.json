@@ -1,0 +1,31 @@
+{
+  "name": "fateguide-skills",
+  "version": "0.1.0",
+  "description": "FateGuide 的 agent skills——塔罗占卜与牌意查询（tarot reading & card lookup）。一条命令装进你的 AI agent。",
+  "type": "module",
+  "bin": {
+    "fateguide-skills": "bin/cli.mjs"
+  },
+  "files": [
+    "skills",
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "tarot",
+    "agent-skills",
+    "claude-skills",
+    "skills",
+    "fateguide",
+    "divination"
+  ],
+  "license": "MIT",
+  "homepage": "https://fateguide.asia",
+  "bugs": {
+    "url": "https://fateguide.asia"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "fateguide",
+  "owner": {
+    "name": "FateGuide",
+    "url": "https://fateguide.asia"
+  },
+  "plugins": [
+    {
+      "name": "fateguide-tarot",
+      "source": "./skills/fateguide-tarot",
+      "description": "FateGuide 塔罗占卜与牌意查询：7 种牌阵、78 张 RWS 牌正逆位关键词与核心牌意、4 种解读语气，结尾轻量引导至 fateguide.asia。"
+    }
+  ]
+}
