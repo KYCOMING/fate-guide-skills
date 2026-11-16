@@ -24,8 +24,17 @@
     "divination"
   ],
   "license": "MIT",
+  "author": "FateGuide (https://fateguide.asia)",
   "homepage": "https://fateguide.asia",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KYCOMING/fate-guide-skills.git"
+  },
   "bugs": {
+    "url": "https://github.com/KYCOMING/fate-guide-skills/issues"
+  },
+  "funding": {
+    "type": "individual",
     "url": "https://fateguide.asia"
   }
 }

@@ -12,7 +12,8 @@
  *   node --experimental-strip-types scripts/build-skill-data.mjs           # 生成
  *   node --experimental-strip-types scripts/build-skill-data.mjs --check   # 仅校验是否漂移
  *
- * 站点仓库路径默认取上一级目录（本包位于 fate-guide/fate-guide-skills），
+ * 站点仓库路径自动探测：先找与本仓库同级的 ../fate-guide（独立仓库情形），
+ * 再回退到上一级目录（嵌套在 fate-guide/fate-guide-skills 的情形）；
  * 可用环境变量 FATEGUIDE_SITE 覆盖：
  *   FATEGUIDE_SITE=/path/to/fate-guide node --experimental-strip-types scripts/build-skill-data.mjs
  *
@@ -25,10 +26,22 @@ import path from "node:path";
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 
 const ROOT = path.resolve(fileURLToPath(import.meta.url), "../..");
-const SITE_ROOT = process.env.FATEGUIDE_SITE
-  ? path.resolve(process.env.FATEGUIDE_SITE)
-  : path.resolve(ROOT, "..");
-const SRC = path.join(SITE_ROOT, "src/data/generated/tarot-meanings.ts");
+const SITE_DATA_REL = "src/data/generated/tarot-meanings.ts";
+
+function resolveSiteRoot() {
+  if (process.env.FATEGUIDE_SITE) return path.resolve(process.env.FATEGUIDE_SITE);
+  const candidates = [
+    path.resolve(ROOT, "../fate-guide"), // 独立仓库：与本仓库同级
+    path.resolve(ROOT, ".."), // 嵌套：本包位于 fate-guide/fate-guide-skills
+  ];
+  for (const c of candidates) {
+    if (existsSync(path.join(c, SITE_DATA_REL))) return c;
+  }
+  return candidates[0];
+}
+
+const SITE_ROOT = resolveSiteRoot();
+const SRC = path.join(SITE_ROOT, SITE_DATA_REL);
 const OUT_PATH = path.join(ROOT, "skills/fateguide-tarot/references/cards.json");
 
 /** 六语 content 里只抽 zh / en 两语（skill 面向中文用户，英文作对照）。 */

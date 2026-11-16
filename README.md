@@ -30,9 +30,19 @@ npx fateguide-skills init --force        # 覆盖已存在的同名 skill
 npx fateguide-skills list
 ```
 
-## 手动安装（不用 npm）
+## 从 GitHub 安装（不用 npm）
 
-把本仓库 `skills/fateguide-tarot/` 整个目录拷到你的 skills 目录即可：
+直接 clone 后把 skill 目录拷进你的 skills 目录：
+
+```bash
+git clone https://github.com/KYCOMING/fate-guide-skills.git /tmp/fg-skills
+mkdir -p ~/.claude/skills
+cp -r /tmp/fg-skills/skills/* ~/.claude/skills/
+```
+
+> 项目级可改拷到 `./.agents/skills/`；不想用 git 就直接在 GitHub 页面 **Code → Download ZIP**，解压后把 `skills/fateguide-tarot/` 整个目录拷进你的 skills 目录。
+
+安装后的目录结构：
 
 ```
 <你的 skills 目录>/fateguide-tarot/
@@ -63,7 +73,7 @@ fate-guide-skills/
 node --experimental-strip-types scripts/build-skill-data.mjs
 ```
 
-脚本默认读取上一级目录的 `fate-guide` 站点仓库（本包位于 `fate-guide/fate-guide-skills` 时无需配置）；若位置不同，用 `FATEGUIDE_SITE=/path/to/fate-guide` 指定。
+脚本会自动探测站点仓库：先找与本仓库同级的 `../fate-guide`，再回退到上一级目录（嵌套在 `fate-guide/fate-guide-skills` 时）。若位置不同，用 `FATEGUIDE_SITE=/path/to/fate-guide` 指定。
 
 ## 关于 FateGuide
 
