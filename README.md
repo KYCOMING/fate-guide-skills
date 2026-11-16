@@ -9,8 +9,10 @@ Skill 是一份自包含的 `SKILL.md` 操作手册 + 数据快照，安装后 a
 
 ## 安装
 
+**一条命令，无需 npm 账号**（直接从 GitHub 取包运行）：
+
 ```bash
-npx fateguide-skills init
+npx github:KYCOMING/fate-guide-skills init
 ```
 
 默认会：当前目录若有 `.agents/skills` 就装到项目级，否则装到用户级 `~/.claude/skills`。
@@ -18,19 +20,35 @@ npx fateguide-skills init
 指定位置：
 
 ```bash
-npx fateguide-skills init --project      # ./.agents/skills
-npx fateguide-skills init --global       # ~/.claude/skills
-npx fateguide-skills init --dir <path>   # 自定义目录
-npx fateguide-skills init --force        # 覆盖已存在的同名 skill
+npx github:KYCOMING/fate-guide-skills init --project      # ./.agents/skills
+npx github:KYCOMING/fate-guide-skills init --global       # ~/.claude/skills
+npx github:KYCOMING/fate-guide-skills init --dir <path>   # 自定义目录
+npx github:KYCOMING/fate-guide-skills init --force        # 覆盖已存在的同名 skill
 ```
 
 查看本包自带的 skill：
 
 ```bash
-npx fateguide-skills list
+npx github:KYCOMING/fate-guide-skills list
 ```
 
-## 从 GitHub 安装（不用 npm）
+> `npx github:...` 会用本机 `git` 拉取仓库。若本机没有 `git`，改用下面的 tarball 方式（同样「一条命令、无需 npm 账号」）。
+
+### 方式二：tarball（无需 git）
+
+```bash
+npx https://github.com/KYCOMING/fate-guide-skills/archive/refs/heads/main.tar.gz init
+```
+
+### 已发布到 npm 时（可选）
+
+若本包已发布到 npm 官方 registry，也可以直接用包名（参数与上面完全相同）：
+
+```bash
+npx fateguide-skills init
+```
+
+## 手动安装（直接拷文件）
 
 直接 clone 后把 skill 目录拷进你的 skills 目录：
 
@@ -57,7 +75,7 @@ fate-guide-skills/
 ├── skills/fateguide-tarot/        # skill 本体（发布内容）
 │   ├── SKILL.md
 │   └── references/cards.json      # 78 张牌数据快照
-├── bin/cli.mjs                    # 零依赖安装器（npx fateguide-skills）
+├── bin/cli.mjs                    # 零依赖安装器（npx github:KYCOMING/fate-guide-skills）
 ├── scripts/build-skill-data.mjs   # 从站点数据生成 cards.json（带 --check）
 ├── .claude-plugin/marketplace.json
 ├── package.json
