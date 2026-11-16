@@ -6,6 +6,9 @@
   "bin": {
     "fateguide-skills": "bin/cli.mjs"
   },
+  "scripts": {
+    "build:workbuddy": "node scripts/build-workbuddy.mjs"
+  },
   "files": [
     "skills",
     "bin",

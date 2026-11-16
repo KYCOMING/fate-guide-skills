@@ -77,6 +77,8 @@ fate-guide-skills/
 │   └── references/cards.json      # 78 张牌数据快照
 ├── bin/cli.mjs                    # 零依赖安装器（npx github:KYCOMING/fate-guide-skills）
 ├── scripts/build-skill-data.mjs   # 从站点数据生成 cards.json（带 --check）
+├── scripts/build-workbuddy.mjs    # 生成 WorkBuddy 兼容包 + 上传用 zip
+├── workbuddy/fateguide-tarot/     # WorkBuddy 版 skill（由上面脚本生成）
 ├── .claude-plugin/marketplace.json
 ├── package.json
 ├── README.md
@@ -92,6 +94,25 @@ node --experimental-strip-types scripts/build-skill-data.mjs
 ```
 
 脚本会自动探测站点仓库：先找与本仓库同级的 `../fate-guide`，再回退到上一级目录（嵌套在 `fate-guide/fate-guide-skills` 时）。若位置不同，用 `FATEGUIDE_SITE=/path/to/fate-guide` 指定。
+
+## 发布到 WorkBuddy 技能市场
+
+WorkBuddy（腾讯）的技能遵循 Agent Skills 结构，但对 `SKILL.md` 的 frontmatter 有额外必填字段（`display_name` / `display_name_en` / `description_zh` / `description_en` / `version` / `author`）。本仓库用一个脚本从唯一的 `skills/fateguide-tarot/SKILL.md` 生成 WorkBuddy 兼容包，正文保持一致，无需维护两份：
+
+```bash
+node scripts/build-workbuddy.mjs
+# → workbuddy/fateguide-tarot/SKILL.md（补齐 WorkBuddy frontmatter）
+# → build/workbuddy/fateguide-tarot-skill-<version>.zip（zip 根目录即 fateguide-tarot/）
+```
+
+上架步骤（需先在 open.workbuddy.cn 完成实名认证入驻）：
+
+1. 登录 [WorkBuddy 开放平台](https://open.workbuddy.cn)，完成个人 / 企业实名认证。
+2. **创建技能** → 上传 `build/workbuddy/fateguide-tarot-skill-<version>.zip`。
+3. 平台解析校验（名称、字段、`references/` 引用）→ 选择合适分类 → 提交审核。
+4. 审核通过后即上架「技能市场」。改动后递增 `package.json` 的 `version` 再重新打包。
+
+也可先用 WorkBuddy 客户端的「导入本地技能包」试跑，确认效果再提交审核。
 
 ## 关于 FateGuide
 
